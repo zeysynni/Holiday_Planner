@@ -1,0 +1,25 @@
+# Core LangChain ecosystem
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+langchain-openai>=0.2.0
+langchain-experimental>=0.3.0
+langgraph>=0.2.0
+
+# Browser and automation
+playwright>=1.47.0
+
+# Utilities and tools
+python-dotenv>=1.0.1
+requests>=2.31.0
+pydantic>=2.7.0
+typing-extensions>=4.10.0
+serpapi>=0.1.5
+uuid>=1.30  # optional, but useful if you explicitly use uuid4()
+
+# Web UI
+gradio>=4.44.0
+
+# Optional utilities for display (safe for HF Spaces)
+ipython>=8.18.0
+
