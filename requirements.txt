@@ -15,6 +15,8 @@ requests>=2.31.0
 pydantic>=2.7.0
 typing-extensions>=4.10.0
 serpapi>=0.1.5
+google-search-results
+wikipedia
 uuid>=1.30  # optional, but useful if you explicitly use uuid4()
 
 # Web UI

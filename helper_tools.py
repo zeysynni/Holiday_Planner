@@ -96,7 +96,7 @@ python_repl = PythonREPLTool()
 # Playwright tool
 async def playwright_tools():
     playwright = await async_playwright().start()
-    browser = await playwright.chromium.launch(headless=False)
+    browser = await playwright.chromium.launch(headless=True)
     toolkit = PlayWrightBrowserToolkit.from_browser(async_browser=browser)
     return toolkit.get_tools(), browser, playwright
 
