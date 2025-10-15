@@ -7,7 +7,7 @@ langchain-experimental>=0.3.0
 langgraph>=0.2.0
 
 # Browser and automation
-playwright>=1.47.0
+playwright>=1.52.0
 
 # Utilities and tools
 python-dotenv>=1.0.1
