@@ -1,3 +1,9 @@
+---
+title: Holiday_Assistant
+app_file: app.py
+sdk: gradio
+sdk_version: 5.34.2
+---
 # 🌴 Holiday Planner — Your AI Sidekick for Trip Planning
 
 **Holiday Planner** is an intelligent personal assistant designed to help you plan your holidays effortlessly.  

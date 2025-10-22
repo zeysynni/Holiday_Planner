@@ -9,7 +9,8 @@ from langgraph.checkpoint.memory import MemorySaver
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from typing import List, Any, Optional, Dict
 from pydantic import BaseModel, Field
-from helper_tools import playwright_tools, other_tools
+#from helper_tools import playwright_tools, other_tools
+from helper_tools import other_tools
 import uuid
 import asyncio
 from datetime import datetime
@@ -40,12 +41,13 @@ class Sidekick():
         self.graph = None
         self.sidekick_id = str(uuid.uuid4())
         self.memory = MemorySaver()
-        self.browser = None
-        self.playwright = None
+        #self.browser = None
+        #self.playwright = None
 
     async def setup(self):
-        self.tools, self.browser, self.playwright = await playwright_tools()
-        self.tools += await other_tools()
+        #self.tools, self.browser, self.playwright = await playwright_tools()
+        #self.tools += await other_tools()
+        self.tools = await other_tools()
         worker_llm = ChatOpenAI(model="gpt-4o-mini")
         self.worker_llm_with_tools = worker_llm.bind_tools(self.tools)
         evaluator_llm = ChatOpenAI(model="gpt-4o-mini")
@@ -53,9 +55,9 @@ class Sidekick():
         await self.build_graph()
 
     def worker(self, state: State) -> Dict[str, Any]:
-        system_message = f"""You are a helpful assistant that can use tools to compelte tasks.
-        You keep working on a task until either you have a question or clarification for the user, or the success criteria is met.
-        You have many tools to help you, including tools to browse the internet, navigating and retrieving web pages.
+        system_message = f"""You are a helpful assistant that can use tools to help user planning their holiday.
+        You keep working on a task until either you have a question or suggestion for the user, or the success criteria is met.
+        You have many tools to help you, including tools to search for flights, send push notifications, search in Google or Wikipedia, and do file management.
         You have a tool to run python code, but note that you would need to inlcude a print() statement if you waned to recieve output.
         The current date and time is {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
@@ -64,7 +66,7 @@ class Sidekick():
         You should reply either with a question for the user about this assignment, or with your final response.
         If you have a question for the user, you need to reply by clearly stating your question. An example might be:
 
-        Question: please clarify whether you want a summary or a detaield answer
+        Question: please clarify which airport do you want to fly to.
 
         If you've finished, reply with the final answer, and don't ask a question; simply reply with the answer.
         """
@@ -168,13 +170,13 @@ class Sidekick():
 
         self.graph = graph_builder.compile(checkpointer=self.memory)
         #display(Image(self.graph.get_graph().draw_mermaid_png()))
-        #png_data = self.graph.get_graph().draw_mermaid_png()
+        png_data = self.graph.get_graph().draw_mermaid_png()
 
-        #with open("graph.png", "wb") as f:
-        #    f.write(png_data)
+        with open("graph.png", "wb") as f:
+            f.write(png_data)
 
     async def run_superstep(self, message, success_criteria, history):
-        config = {"configurable": {"thread_id": self.sidekick_id}}
+        config = {"configurable": {"thread_id": self.sidekick_id}, "recursion_limit": 30}
 
         state = {
             "messages": message,
@@ -189,17 +191,17 @@ class Sidekick():
         feedback = {"role": "assistant", "content": result["messages"][-1].content}
         return history + [user, reply, feedback]
 
-    def cleanup(self):
-        if self.browser:
-            try:
-                loop = asyncio.get_running_loop()
-                loop.create_task(self.browser.close())
-                if self.playwright:
-                    loop.create_task(self.playwright.stop())
-            except RuntimeError:
-                asyncio.run(self.browser.close())
-                if self.playwright:
-                    asyncio.run(self.playwright.stop())
+    #def cleanup(self):
+    #    if self.browser:
+    #        try:
+    #            loop = asyncio.get_running_loop()
+    #            loop.create_task(self.browser.close())
+    #            if self.playwright:
+    #                loop.create_task(self.playwright.stop())
+    #        except RuntimeError:
+    #            asyncio.run(self.browser.close())
+    #            if self.playwright:
+    #                asyncio.run(self.playwright.stop())
 
     
 

@@ -33,15 +33,15 @@ async def reset():
 
 
 with gr.Blocks(title="Sidekick", theme=gr.themes.Default(primary_hue="emerald")) as ui:
-    gr.Markdown("## Sidekick Personal Co-Worker")
+    gr.Markdown("## Holiday Planner")
     #sidekick = gr.State(delete_callback=free_resources)
     sidekick = gr.State()
 
     with gr.Row():
-        chatbot = gr.Chatbot(label="Sidekick", height=300, type="messages")
+        chatbot = gr.Chatbot(label="Assistant", height=300, type="messages")
     with gr.Group():
         with gr.Row():
-            message = gr.Textbox(show_label=False, placeholder="Your request to the Sidekick")
+            message = gr.Textbox(show_label=False, placeholder="Your request to the assistant")
         with gr.Row():
             success_criteria = gr.Textbox(
                 show_label=False, placeholder="What are your success critiera?"

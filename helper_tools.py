@@ -1,5 +1,5 @@
-from playwright.async_api import async_playwright
-from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
+#from playwright.async_api import async_playwright
+#from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
 from dotenv import load_dotenv
 import os
 from datetime import datetime
@@ -30,7 +30,7 @@ def search_flights(from_city: str, to_city: str, departure_date: str, return_dat
         "arrival_id": to_city,
         "outbound_date": departure_date,
         "return_date": return_date,
-        "type": 2,
+        #"type": 2,
         "currency": "EUR",
         "api_key": serpapi_key
     }
@@ -94,11 +94,11 @@ file_tools = get_file_tools()
 python_repl = PythonREPLTool()
 
 # Playwright tool
-async def playwright_tools():
-    playwright = await async_playwright().start()
-    browser = await playwright.chromium.launch(headless=True)
-    toolkit = PlayWrightBrowserToolkit.from_browser(async_browser=browser)
-    return toolkit.get_tools(), browser, playwright
+#async def playwright_tools():
+#    playwright = await async_playwright().start()
+#    browser = await playwright.chromium.launch(headless=True)
+#    toolkit = PlayWrightBrowserToolkit.from_browser(async_browser=browser)
+#    return toolkit.get_tools(), browser, playwright
 
 # Set of other tools
 async def other_tools():
